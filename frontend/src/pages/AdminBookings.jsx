@@ -39,6 +39,99 @@ function formatDate(ts) {
   } catch { return String(ts); }
 }
 
+function renderLoading() {
+  return <div className="p-12 text-center text-slate-500">Loading...</div>;
+}
+
+function renderEmpty() {
+  return (
+    <div className="p-12 text-center">
+      <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-400 mb-3">
+        <Inbox className="h-5 w-5" />
+      </div>
+      <div className="text-sm text-slate-600">No bookings match your filters yet.</div>
+      <Link to="/book" className="mt-3 inline-block text-sm font-semibold text-indigo-600 hover:underline">
+        Open booking form →
+      </Link>
+    </div>
+  );
+}
+
+function renderRows(rows, onStatusChange, onDelete) {
+  return rows.map((b) => {
+    const st = STATUSES.find((s) => s.value === b.status) || STATUSES[0];
+    return (
+      <tr key={b.id} data-testid={`booking-row-${b.id}`} className="border-b border-slate-100 last:border-b-0 hover:bg-slate-50/70">
+        <td className="px-5 py-4">
+          <div className="font-semibold text-navy-900">{b.full_name}</div>
+          {b.message && <div className="text-xs text-slate-500 line-clamp-1 max-w-xs mt-0.5">{b.message}</div>}
+        </td>
+        <td className="px-5 py-4 hidden md:table-cell">
+          <a href={`mailto:${b.email}`} className="flex items-center gap-1.5 text-slate-700 hover:text-indigo-600"><Mail className="h-3.5 w-3.5" /> {b.email}</a>
+          <a href={`tel:${b.phone}`} className="flex items-center gap-1.5 text-slate-500 text-xs mt-1 hover:text-indigo-600"><Phone className="h-3 w-3" /> {b.phone}</a>
+        </td>
+        <td className="px-5 py-4 hidden lg:table-cell">
+          <span className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700">
+            {REASON_LABELS[b.reason] || b.reason}
+          </span>
+        </td>
+        <td className="px-5 py-4 hidden lg:table-cell text-slate-700">
+          {b.preferred_date ? (
+            <div className="text-xs">
+              <div className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {b.preferred_date}</div>
+              {b.preferred_time && <div className="flex items-center gap-1 mt-0.5 text-slate-500"><Clock className="h-3 w-3" /> {b.preferred_time}</div>}
+            </div>
+          ) : <span className="text-slate-400">—</span>}
+        </td>
+        <td className="px-5 py-4">
+          <Select value={b.status} onValueChange={(v) => onStatusChange(b.id, v)}>
+            <SelectTrigger data-testid={`status-select-${b.id}`} className={`h-8 px-2.5 rounded-full border-0 text-xs font-semibold w-auto ${st.color}`}>
+              <SelectValue>{st.label}</SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {STATUSES.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        </td>
+        <td className="px-5 py-4 hidden md:table-cell text-xs text-slate-500">{formatDate(b.created_at)}</td>
+        <td className="px-5 py-4 text-right">
+          <button
+            data-testid={`delete-btn-${b.id}`}
+            onClick={() => onDelete(b.id)}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
+            title="Delete"
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
+        </td>
+      </tr>
+    );
+  });
+}
+
+function renderTable(loading, rows, onStatusChange, onDelete) {
+  if (loading) return renderLoading();
+  if (rows.length === 0) return renderEmpty();
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead className="bg-slate-50 border-b border-slate-200 text-slate-600">
+          <tr>
+            <th className="text-left font-semibold px-5 py-3">Lead</th>
+            <th className="text-left font-semibold px-5 py-3 hidden md:table-cell">Contact</th>
+            <th className="text-left font-semibold px-5 py-3 hidden lg:table-cell">Reason</th>
+            <th className="text-left font-semibold px-5 py-3 hidden lg:table-cell">Preferred</th>
+            <th className="text-left font-semibold px-5 py-3">Status</th>
+            <th className="text-left font-semibold px-5 py-3 hidden md:table-cell">Received</th>
+            <th className="text-right font-semibold px-5 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody>{renderRows(rows, onStatusChange, onDelete)}</tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function AdminBookings() {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
@@ -195,86 +288,7 @@ export default function AdminBookings() {
 
         {/* Table */}
         <div className="mt-5 rounded-2xl bg-white border border-slate-200 overflow-hidden">
-          {loading ? (
-            <div className="p-12 text-center text-slate-500">Loading...</div>
-          ) : filtered.length === 0 ? (
-            <div className="p-12 text-center">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-400 mb-3">
-                <Inbox className="h-5 w-5" />
-              </div>
-              <div className="text-sm text-slate-600">No bookings match your filters yet.</div>
-              <Link to="/book" className="mt-3 inline-block text-sm font-semibold text-indigo-600 hover:underline">
-                Open booking form →
-              </Link>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-slate-50 border-b border-slate-200 text-slate-600">
-                  <tr>
-                    <th className="text-left font-semibold px-5 py-3">Lead</th>
-                    <th className="text-left font-semibold px-5 py-3 hidden md:table-cell">Contact</th>
-                    <th className="text-left font-semibold px-5 py-3 hidden lg:table-cell">Reason</th>
-                    <th className="text-left font-semibold px-5 py-3 hidden lg:table-cell">Preferred</th>
-                    <th className="text-left font-semibold px-5 py-3">Status</th>
-                    <th className="text-left font-semibold px-5 py-3 hidden md:table-cell">Received</th>
-                    <th className="text-right font-semibold px-5 py-3">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((b) => {
-                    const st = STATUSES.find((s) => s.value === b.status) || STATUSES[0];
-                    return (
-                      <tr key={b.id} data-testid={`booking-row-${b.id}`} className="border-b border-slate-100 last:border-b-0 hover:bg-slate-50/70">
-                        <td className="px-5 py-4">
-                          <div className="font-semibold text-navy-900">{b.full_name}</div>
-                          {b.message && <div className="text-xs text-slate-500 line-clamp-1 max-w-xs mt-0.5">{b.message}</div>}
-                        </td>
-                        <td className="px-5 py-4 hidden md:table-cell">
-                          <a href={`mailto:${b.email}`} className="flex items-center gap-1.5 text-slate-700 hover:text-indigo-600"><Mail className="h-3.5 w-3.5" /> {b.email}</a>
-                          <a href={`tel:${b.phone}`} className="flex items-center gap-1.5 text-slate-500 text-xs mt-1 hover:text-indigo-600"><Phone className="h-3 w-3" /> {b.phone}</a>
-                        </td>
-                        <td className="px-5 py-4 hidden lg:table-cell">
-                          <span className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700">
-                            {REASON_LABELS[b.reason] || b.reason}
-                          </span>
-                        </td>
-                        <td className="px-5 py-4 hidden lg:table-cell text-slate-700">
-                          {b.preferred_date ? (
-                            <div className="text-xs">
-                              <div className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {b.preferred_date}</div>
-                              {b.preferred_time && <div className="flex items-center gap-1 mt-0.5 text-slate-500"><Clock className="h-3 w-3" /> {b.preferred_time}</div>}
-                            </div>
-                          ) : <span className="text-slate-400">—</span>}
-                        </td>
-                        <td className="px-5 py-4">
-                          <Select value={b.status} onValueChange={(v) => updateStatus(b.id, v)}>
-                            <SelectTrigger data-testid={`status-select-${b.id}`} className={`h-8 px-2.5 rounded-full border-0 text-xs font-semibold w-auto ${st.color}`}>
-                              <SelectValue>{st.label}</SelectValue>
-                            </SelectTrigger>
-                            <SelectContent>
-                              {STATUSES.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
-                            </SelectContent>
-                          </Select>
-                        </td>
-                        <td className="px-5 py-4 hidden md:table-cell text-xs text-slate-500">{formatDate(b.created_at)}</td>
-                        <td className="px-5 py-4 text-right">
-                          <button
-                            data-testid={`delete-btn-${b.id}`}
-                            onClick={() => remove(b.id)}
-                            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
-                            title="Delete"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
+          {renderTable(loading, filtered, updateStatus, remove)}
         </div>
       </div>
     </section>

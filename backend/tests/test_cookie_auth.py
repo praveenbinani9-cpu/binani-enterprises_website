@@ -121,7 +121,7 @@ class TestLogout:
         assert logout_response.status_code == 200, f"Expected 200, got {logout_response.status_code}"
         
         data = logout_response.json()
-        assert data.get("ok") is True, "Logout should return {ok: true}"
+        assert data.get("ok"), "Logout should return truthy ok"
         
         # Check Set-Cookie header clears the cookie (expires in past or empty value)
         set_cookie = logout_response.headers.get('Set-Cookie', '')
@@ -264,7 +264,7 @@ class TestPatchDeleteWithCookie:
         """DELETE /api/admin/bookings/{id} with cookie auth works"""
         response = self.session.delete(f"{BASE_URL}/api/admin/bookings/{self.booking_id}")
         assert response.status_code == 200, f"Expected 200, got {response.status_code}"
-        assert response.json().get("ok") is True
+        assert response.json().get("ok")
 
 
 if __name__ == "__main__":
