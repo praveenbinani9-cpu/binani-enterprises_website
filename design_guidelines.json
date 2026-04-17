@@ -1,0 +1,130 @@
+{
+  "theme": "light",
+  "archetype": "Swiss & High-Contrast / Premium SaaS",
+  "colors": {
+    "primary": "#0B1F3A",
+    "primary_foreground": "#FFFFFF",
+    "secondary": "#4F46E5",
+    "secondary_foreground": "#FFFFFF",
+    "accent_cyan": "#06B6D4",
+    "accent_purple": "#7C3AED",
+    "background": "#FFFFFF",
+    "surface": "#F8FAFC",
+    "surface_hover": "#F1F5F9",
+    "border": "#E2E8F0",
+    "text_main": "#0F172A",
+    "text_muted": "#64748B",
+    "gradient_hero": "linear-gradient(135deg, #F8FAFC 0%, #E0E7FF 50%, #E0F2FE 100%)",
+    "gradient_secondary": "linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)"
+  },
+  "typography": {
+    "heading_font": "Satoshi, sans-serif",
+    "body_font": "Inter, sans-serif",
+    "h1": "text-5xl md:text-6xl font-black tracking-tighter text-slate-900",
+    "h2": "text-3xl md:text-4xl font-bold tracking-tight text-slate-900",
+    "h3": "text-xl md:text-2xl font-semibold tracking-tight text-slate-800",
+    "body": "text-base md:text-lg text-slate-600 leading-relaxed",
+    "overline": "text-xs font-bold uppercase tracking-[0.2em] text-indigo-600"
+  },
+  "spacing_and_layout": {
+    "section_padding": "py-24 md:py-32",
+    "container": "max-w-7xl mx-auto px-6 md:px-12",
+    "gap_standard": "gap-8 md:gap-12",
+    "card_padding": "p-8 md:p-10",
+    "border_radius_card": "rounded-2xl",
+    "border_radius_button": "rounded-full"
+  },
+  "surfaces": {
+    "card_default": "bg-white border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+    "card_glass": "backdrop-blur-xl bg-white/70 border border-white/40 shadow-xl",
+    "card_hover": "hover:-translate-y-1 hover:shadow-2xl transition-all duration-300",
+    "input_field": "bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500"
+  },
+  "components": {
+    "header": {
+      "style": "sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-slate-200",
+      "logo": "Text wordmark for 'Binani Enterprises' using Satoshi font, font-black, text-primary."
+    },
+    "hero": {
+      "layout": "grid md:grid-cols-2 gap-12 items-center",
+      "visuals": "Gradient background overlay. Abstract 3D floating image and floating glassmorphism cards indicating payments, analytics, and success rate.",
+      "ctas": "Primary: Deep Blue pill button. Secondary: Outline pill button."
+    },
+    "trust_bar": {
+      "layout": "flex flex-wrap justify-center items-center gap-12 py-12 border-y border-slate-100 bg-slate-50/50"
+    },
+    "problem_section": {
+      "layout": "grid md:grid-cols-3 gap-8",
+      "card_style": "card_default with a subtle accent line or icon to indicate friction points."
+    },
+    "services_section": {
+      "layout": "Bento grid (e.g., 2 items top row, 3 items bottom row, utilizing asymmetric spans).",
+      "card_style": "card_default with hover lift."
+    },
+    "how_it_works": {
+      "layout": "Horizontal stepper: flex flex-col md:flex-row gap-8 relative items-start",
+      "connector": "hidden md:block absolute top-6 left-0 w-full h-0.5 bg-slate-200 -z-10"
+    },
+    "dashboard_preview": {
+      "layout": "Container with massive soft shadow. Inside: A mockup or the provided dashboard image, overlaid with floating metric cards (Transactions, Success rate).",
+      "style": "rounded-3xl overflow-hidden border border-slate-200 shadow-2xl"
+    },
+    "testimonials": {
+      "layout": "grid md:grid-cols-2 gap-8",
+      "avatar_style": "w-12 h-12 rounded-full object-cover"
+    },
+    "booking_page": {
+      "layout": "grid md:grid-cols-2 gap-16 container mx-auto py-24 items-start",
+      "form_style": "card_default p-8 md:p-12 rounded-3xl"
+    }
+  },
+  "animation": {
+    "hover_state": "transition-all duration-300 ease-in-out",
+    "card_entrance": "staggered fade-up for grid items",
+    "button_hover": "hover:scale-[1.02] active:scale-[0.98]"
+  },
+  "image_urls": {
+    "hero_visual": {
+      "url": "https://images.unsplash.com/photo-1737505191929-7cd64f65d2d6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMDNkJTIwc2hhcGVzJTIwYmx1ZSUyMGN5YW58ZW58MHx8fHwxNzc2NDIyNTQ3fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Abstract 3D shapes in blue and cyan, used for hero section background or floating visual."
+    },
+    "dashboard_mockup": {
+      "url": "https://images.unsplash.com/photo-1759661966728-4a02e3c6ed91?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2ODh8MHwxfHNlYXJjaHwzfHxidXNpbmVzcyUyMGFuYWx5dGljcyUyMGRhc2hib2FyZHxlbnwwfHx8fDE3NzY0MjI1NTR8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Person using tablet with analytics charts, used for Dashboard Preview section."
+    },
+    "testimonial_avatar_1": {
+      "url": "https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHBvcnRyYWl0JTIwc21pbGluZ3xlbnwwfHx8fDE3NzY0MjI1MzN8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Man in white shirt smiling."
+    },
+    "testimonial_avatar_2": {
+      "url": "https://images.pexels.com/photos/30161439/pexels-photo-30161439.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Smiling young woman in blazer."
+    },
+    "sponsor_stripe": {
+      "url": "https://images.unsplash.com/photo-1555274175-75f4056dfd05?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwzfHxzdHJpcGUlMjBsb2dvfGVufDB8fHx8MTc3NjQyMjU0Mnww&ixlib=rb-4.1.0&q=85",
+      "description": "Sponsor image substitute for Trust Bar."
+    },
+    "sponsor_razorpay": {
+      "url": "https://images.unsplash.com/photo-1642132652860-471b4228023e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHwxfHxyYXpvcnBheXxlbnwwfHx8fDE3NzY0MjI1NDd8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Sponsor image substitute for Trust Bar."
+    },
+    "sponsor_cashfree": {
+      "url": "https://images.unsplash.com/photo-1641350625112-3b1d73c71418?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzV8MHwxfHNlYXJjaHwzfHxwYXlwYWwlMjBsb2dvfGVufDB8fHx8MTc3NjQyMjU1NHww&ixlib=rb-4.1.0&q=85",
+      "description": "Sponsor image substitute for Trust Bar."
+    },
+    "sponsor_payu": {
+      "url": "https://images.unsplash.com/photo-1648161235886-32b6764917e6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHwzfHx2aXNhJTIwbG9nb3xlbnwwfHx8fDE3NzY0MjI1NTR8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Sponsor image substitute for Trust Bar."
+    }
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the color palette. Use Deep Blue (#0B1F3A) for primary elements, and Indigo/Purple gradients for accents and secondary CTA items.",
+    "Do NOT use 'Inter' for headings. Use 'Satoshi' (or a similar geometric sans like Cabinet Grotesk or SF Pro Display) to maintain a premium feel. Inter is fine for body text.",
+    "Implement glassmorphism for hero floating cards using 'backdrop-blur-xl bg-white/70 border border-white/20' and a subtle shadow. Do not make the overlay too dark.",
+    "For the Trust Bar logos, display the partner names (Razorpay, Cashfree, PayU, Stripe) as stylized typography (e.g., using a bold, tightly-tracked sans-serif) alongside the provided Unsplash sponsor image URLs. Style the images as small, rounded avatars (w-10 h-10 object-cover grayscale opacity-70) so they act as tasteful visual anchors rather than exact logos.",
+    "Build the 'Services' section using a bento grid layout as described in the E1 layout protocol (asymmetric spans, e.g., col-span-2 vs col-span-3 depending on screen size).",
+    "Add 'data-testid' attributes to all interactive elements (buttons, form inputs, links, calendar dates) to comply with testing requirements.",
+    "Use Shadcn components for complex interactions like the Contact/Booking form, Select Dropdown, and Calendar (Datepicker). Customize them to match the rounded-xl and clean aesthetic.",
+    "Ensure generous padding is used throughout (p-8 to p-12 on cards) to allow the premium fintech UI to breathe."
+  ]
+}
