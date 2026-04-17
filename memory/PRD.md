@@ -26,28 +26,27 @@ Build a modern, high-converting fintech SaaS website for "Binani Enterprises" �
 
 ## Implemented (2026-02)
 - Backend endpoints: `GET /api/`, `POST/GET /api/bookings`, `GET /api/bookings/{id}`, `POST /api/contact`, `GET /api/stats`
+- **Admin auth + console (iteration 2)**: `POST /api/admin/login`, `GET /api/admin/me`, `GET /api/admin/bookings`, `PATCH /api/admin/bookings/{id}` (status workflow: new → contacted → scheduled → converted → closed), `DELETE /api/admin/bookings/{id}`, `GET /api/admin/stats`. JWT HS256 (7-day), Bearer in `Authorization`.
+- **Admin UI**: `/admin/login` single-admin form; `/admin/bookings` dashboard with 4 KPI cards, search (name/email/phone), status filter, inline status select, delete, refresh, logout. ProtectedRoute guards /admin/*. Navbar/Footer hidden on admin routes.
+- **Booking page Zoho toggle (iteration 2)**: tabs `Quick form` / `Pick a slot`. When `REACT_APP_ZOHO_BOOKING_URL` is set, the Pick-a-slot tab embeds the Zoho iframe; when empty, it shows 3-step setup instructions pointing to zoho.com/bookings.
 - Booking flow with success confirmation screen, toast notifications (sonner)
 - Hero with live-feel floating glass cards + mini revenue chart
-- Trust bar marquee of 6 gateway partners
-- 4 problem cards, bento-style 5-service grid, 3-step flow, 4 audience cards
-- Mock unified analytics dashboard preview (KPIs + revenue chart + gateway split)
-- 3 testimonials, CTA section, footer with disclaimer
-- Sticky mobile CTA, responsive layout, full data-testid coverage
+- Trust bar marquee, 4 problem cards, bento 5-service grid, 3-step flow, 4 audience cards, mock analytics dashboard, 3 testimonials, CTA, footer with disclaimer, sticky mobile CTA
 
-## Test Results (iteration 1)
-- Backend: 15/15 passed (100%)
-- Frontend: all UI/E2E tests passed
+## Test Results
+- Iteration 1: Backend 15/15 · Frontend all passed
+- Iteration 2: Backend 26/26 · Frontend all passed
 
 ## Prioritized Backlog
 - P1: Replace placeholder testimonials, stats, contact details with real Binani content
 - P1: Connect real email notifications (Resend/SendGrid) when the client is ready
-- P2: Add an admin dashboard at `/admin` to list/manage leads (auth-protected)
-- P2: Google Calendar / Calendly integration to auto-book slots
+- P1: Paste Zoho booking URL into `frontend/.env` → `REACT_APP_ZOHO_BOOKING_URL` to activate live slot picking
 - P2: Case studies / blog section for SEO lead gen
 - P3: Multi-gateway comparison quiz as lead magnet
 - P3: Analytics tracking (PostHog events on CTA clicks, form submits)
+- P3: Export leads CSV from admin console
 
 ## Next Tasks
-1. Share real content (testimonials, email, phone, client logos)
-2. Decide on email provider + share API key
-3. Optionally add admin view for bookings
+1. Create free Zoho Bookings account, grab booking page URL, paste into `frontend/.env`
+2. Share real content (testimonials, email, phone, client logos)
+3. Decide on email provider + share API key for booking notifications
