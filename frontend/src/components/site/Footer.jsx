@@ -19,11 +19,11 @@ export default function Footer() {
               Faster onboarding. Higher success rates. Less friction.
             </p>
             <div className="mt-6 space-y-2.5 text-sm">
-              <a href="mailto:hello@binanienterprises.com" className="flex items-center gap-2.5 text-slate-300 hover:text-white transition" data-testid="footer-email">
-                <Mail className="h-4 w-4 text-indigo-300" /> hello@binanienterprises.com
+              <a href="mailto:hello@binanienterprises.in" className="flex items-center gap-2.5 text-slate-300 hover:text-white transition" data-testid="footer-email">
+                <Mail className="h-4 w-4 text-indigo-300" /> hello@binanienterprises.in
               </a>
-              <a href="tel:+919000000000" className="flex items-center gap-2.5 text-slate-300 hover:text-white transition" data-testid="footer-phone">
-                <Phone className="h-4 w-4 text-indigo-300" /> +91 90000 00000
+              <a href="tel:+918460360600" className="flex items-center gap-2.5 text-slate-300 hover:text-white transition" data-testid="footer-phone">
+                <Phone className="h-4 w-4 text-indigo-300" /> +91 84603 60600
               </a>
               <div className="flex items-center gap-2.5 text-slate-300">
                 <MapPin className="h-4 w-4 text-indigo-300" /> Mumbai • Bengaluru • Remote

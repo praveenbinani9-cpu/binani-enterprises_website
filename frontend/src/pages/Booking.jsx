@@ -132,11 +132,11 @@ export default function Booking() {
             <div className="mt-10 rounded-2xl border border-slate-200 bg-white/80 backdrop-blur p-5">
               <div className="text-[11px] uppercase tracking-[0.2em] text-slate-500 font-semibold">Prefer to reach out directly?</div>
               <div className="mt-3 space-y-2 text-sm">
-                <a href="mailto:hello@binanienterprises.com" className="flex items-center gap-2 text-navy-900 hover:text-indigo-600 font-medium">
-                  <Mail className="h-4 w-4" /> hello@binanienterprises.com
+                <a href="mailto:hello@binanienterprises.in" className="flex items-center gap-2 text-navy-900 hover:text-indigo-600 font-medium">
+                  <Mail className="h-4 w-4" /> hello@binanienterprises.in
                 </a>
-                <a href="tel:+919000000000" className="flex items-center gap-2 text-navy-900 hover:text-indigo-600 font-medium">
-                  <Phone className="h-4 w-4" /> +91 90000 00000
+                <a href="tel:+918460360600" className="flex items-center gap-2 text-navy-900 hover:text-indigo-600 font-medium">
+                  <Phone className="h-4 w-4" /> +91 84603 60600
                 </a>
               </div>
             </div>
@@ -183,7 +183,7 @@ export default function Booking() {
                   </div>
                   <div>
                     <Label htmlFor="phone" className="text-xs font-semibold text-slate-700 uppercase tracking-wider">Phone</Label>
-                    <Input id="phone" data-testid="input-phone" placeholder="+91 90000 00000"
+                    <Input id="phone" data-testid="input-phone" placeholder="+91 84603 60600"
                       value={form.phone} onChange={(e) => update("phone", e.target.value)}
                       className="mt-2 h-12 rounded-xl bg-slate-50 border-slate-200 focus-visible:ring-indigo-500 focus-visible:ring-2" required />
                   </div>

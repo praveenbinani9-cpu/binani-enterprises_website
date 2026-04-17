@@ -45,7 +45,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -58,7 +58,7 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <Link to="/book" data-testid="nav-book-btn">
             <Button
               variant="ghost"
@@ -78,14 +78,14 @@ export default function Navbar() {
         <button
           data-testid="mobile-menu-toggle"
           onClick={() => setOpen(!open)}
-          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white"
+          className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       {open && (
-        <div data-testid="mobile-menu" className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-xl">
+        <div data-testid="mobile-menu" className="lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-xl">
           <div className="px-5 py-4 flex flex-col gap-1">
             {navItems.map((item) => (
               <a

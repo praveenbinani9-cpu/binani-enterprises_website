@@ -7,7 +7,7 @@ export default function StickyMobileCTA() {
   return (
     <div
       data-testid="sticky-mobile-cta"
-      className="md:hidden fixed bottom-20 inset-x-4 z-40"
+      className="lg:hidden fixed bottom-20 inset-x-4 z-40"
     >
       <Link to="/book">
         <Button className="w-full rounded-full h-12 gradient-accent text-white font-semibold shadow-xl shadow-indigo-500/30">
