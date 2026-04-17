@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Lock, ArrowLeft, Shield } from "lucide-react";
 import { adminLogin } from "@/lib/api";
-import { saveSession } from "@/lib/auth";
+import { saveEmail } from "@/lib/auth";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -23,8 +23,8 @@ export default function AdminLogin() {
     }
     setSubmitting(true);
     try {
-      const { token, email: userEmail } = await adminLogin(email, password);
-      saveSession(token, userEmail);
+      const { email: userEmail } = await adminLogin(email, password);
+      saveEmail(userEmail);
       toast.success("Welcome back, admin");
       const from = location.state?.from?.pathname || "/admin/bookings";
       navigate(from, { replace: true });

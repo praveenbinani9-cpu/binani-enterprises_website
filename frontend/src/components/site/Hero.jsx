@@ -87,7 +87,7 @@ export default function Hero() {
                     <div className="flex items-end gap-1.5 h-24">
                       {[34, 58, 46, 72, 62, 88, 80, 94, 76, 98, 84, 108].map((h, i) => (
                         <div
-                          key={i}
+                          key={`hero-bar-${i}-${h}`}
                           className="flex-1 rounded-t-md bg-gradient-to-t from-indigo-400/60 to-cyan-300"
                           style={{ height: `${h}px` }}
                         />

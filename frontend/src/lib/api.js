@@ -3,19 +3,12 @@ import axios from "axios";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
 
+// withCredentials ensures httpOnly cookies are sent on same-origin and
+// allowed cross-origin calls (CORS must permit credentials if cross-origin).
 export const api = axios.create({
   baseURL: API,
   headers: { "Content-Type": "application/json" },
-});
-
-// Attach admin token if present
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("binani_admin_token");
-  if (token && config.url && config.url.startsWith("/admin")) {
-    config.headers = config.headers || {};
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  withCredentials: true,
 });
 
 // Public
@@ -32,6 +25,11 @@ export async function getStats() {
 // Admin
 export async function adminLogin(email, password) {
   const { data } = await api.post("/admin/login", { email, password });
+  return data;
+}
+
+export async function adminLogout() {
+  const { data } = await api.post("/admin/logout");
   return data;
 }
 

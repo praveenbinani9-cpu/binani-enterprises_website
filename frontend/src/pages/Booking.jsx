@@ -65,7 +65,6 @@ export default function Booking() {
       toast.success("Booking received! We'll reach out within 24 hours.");
       setSubmitted(true);
     } catch (err) {
-      console.error(err);
       toast.error("Something went wrong. Please try again or email us directly.");
     } finally { setSubmitting(false); }
   };

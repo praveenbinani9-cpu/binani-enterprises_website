@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header, Request
+from fastapi import Response
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -88,19 +89,24 @@ def create_admin_token(email: str) -> str:
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALG)
 
 
-def admin_required(authorization: Optional[str] = Header(None)) -> dict:
-    if not authorization or not authorization.startswith("Bearer "):
+def admin_required(request: Request) -> dict:
+    # Prefer httpOnly cookie; fall back to Authorization: Bearer for API clients
+    token = request.cookies.get("admin_token")
+    if not token:
+        auth_header = request.headers.get("authorization") or request.headers.get("Authorization") or ""
+        if auth_header.startswith("Bearer "):
+            token = auth_header[7:]
+    if not token:
         raise HTTPException(status_code=401, detail="Not authenticated")
-    token = authorization[7:]
     try:
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALG])
+        if payload.get("role") != "admin":
+            raise HTTPException(status_code=403, detail="Admin access required")
+        return payload
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token expired")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
-    if payload.get("role") != "admin":
-        raise HTTPException(status_code=403, detail="Admin access required")
-    return payload
 
 
 def _deserialize_booking(doc: dict) -> dict:
@@ -166,11 +172,27 @@ async def stats():
 
 # ---------- Admin routes ----------
 @api_router.post("/admin/login")
-async def admin_login(payload: AdminLogin):
+async def admin_login(payload: AdminLogin, response: Response):
     if payload.email.lower() != ADMIN_EMAIL or payload.password != ADMIN_PASSWORD:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     token = create_admin_token(payload.email.lower())
+    # Set httpOnly cookie (secure in prod, lax for same-site nav)
+    response.set_cookie(
+        key="admin_token",
+        value=token,
+        httponly=True,
+        secure=True,
+        samesite="lax",
+        max_age=60 * 60 * 24 * 7,  # 7 days
+        path="/",
+    )
     return {"token": token, "email": ADMIN_EMAIL, "role": "admin"}
+
+
+@api_router.post("/admin/logout")
+async def admin_logout(response: Response):
+    response.delete_cookie("admin_token", path="/")
+    return {"ok": True}
 
 
 @api_router.get("/admin/me")

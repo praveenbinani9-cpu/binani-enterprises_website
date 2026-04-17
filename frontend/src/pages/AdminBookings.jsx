@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,9 @@ import {
 } from "lucide-react";
 import {
   adminListBookings, adminUpdateBookingStatus, adminDeleteBooking,
-  adminStats,
+  adminStats, adminLogout,
 } from "@/lib/api";
-import { clearSession, getEmail } from "@/lib/auth";
+import { clearEmail, getEmail } from "@/lib/auth";
 
 const STATUSES = [
   { value: "new", label: "New", color: "bg-indigo-100 text-indigo-700" },
@@ -47,7 +47,7 @@ export default function AdminBookings() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [stats, setStats] = useState({ total: 0, by_status: {} });
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
     try {
       const [bookings, s] = await Promise.all([adminListBookings(), adminStats()]);
@@ -55,7 +55,7 @@ export default function AdminBookings() {
       setStats(s);
     } catch (err) {
       if (err.response?.status === 401) {
-        clearSession();
+        clearEmail();
         navigate("/admin/login");
         return;
       }
@@ -63,9 +63,9 @@ export default function AdminBookings() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate]);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [load]);
 
   const updateStatus = async (id, status) => {
     try {
@@ -92,8 +92,9 @@ export default function AdminBookings() {
     }
   };
 
-  const logout = () => {
-    clearSession();
+  const logout = async () => {
+    try { await adminLogout(); } catch { /* ignore network errors on logout */ }
+    clearEmail();
     navigate("/admin/login");
   };
 

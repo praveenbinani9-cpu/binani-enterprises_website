@@ -84,7 +84,7 @@ export default function DashboardPreview() {
                     </div>
                     <div className="mt-5 flex items-end gap-2 h-36">
                       {bars.map((b, i) => (
-                        <div key={i} className="flex-1 flex items-end">
+                        <div key={`rev-bar-${i}-${b}`} className="flex-1 flex items-end">
                           <div
                             className="w-full rounded-t-md bg-gradient-to-t from-indigo-500 to-cyan-400"
                             style={{ height: `${b}px` }}

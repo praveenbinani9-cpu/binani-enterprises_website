@@ -1,24 +1,15 @@
-const TOKEN_KEY = "binani_admin_token";
+// Session state cached client-side for UI only. The real auth lives in an
+// httpOnly cookie set by the backend (not accessible to JS — safe from XSS).
 const EMAIL_KEY = "binani_admin_email";
 
-export function saveSession(token, email) {
-  localStorage.setItem(TOKEN_KEY, token);
-  if (email) localStorage.setItem(EMAIL_KEY, email);
+export function saveEmail(email) {
+  if (email) sessionStorage.setItem(EMAIL_KEY, email);
 }
 
-export function clearSession() {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(EMAIL_KEY);
-}
-
-export function getToken() {
-  return localStorage.getItem(TOKEN_KEY);
+export function clearEmail() {
+  sessionStorage.removeItem(EMAIL_KEY);
 }
 
 export function getEmail() {
-  return localStorage.getItem(EMAIL_KEY);
-}
-
-export function isAuthenticated() {
-  return !!getToken();
+  return sessionStorage.getItem(EMAIL_KEY);
 }

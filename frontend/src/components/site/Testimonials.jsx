@@ -48,7 +48,7 @@ export default function Testimonials() {
             >
               <div className="flex items-center gap-0.5">
                 {[...Array(5)].map((_, s) => (
-                  <Star key={s} className={`h-4 w-4 ${i === 1 ? "text-amber-300 fill-amber-300" : "text-amber-500 fill-amber-500"}`} />
+                  <Star key={`t${i}-star-${s}`} className={`h-4 w-4 ${i === 1 ? "text-amber-300 fill-amber-300" : "text-amber-500 fill-amber-500"}`} />
                 ))}
               </div>
               <blockquote className={`mt-5 font-display text-lg md:text-xl leading-snug tracking-tight ${i === 1 ? "text-white" : "text-navy-900"}`}>

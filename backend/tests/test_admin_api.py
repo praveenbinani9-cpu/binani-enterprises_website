@@ -9,9 +9,10 @@ import uuid
 
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 
-# Admin credentials from test_credentials.md
-ADMIN_EMAIL = "admin@binanienterprises.com"
-ADMIN_PASSWORD = "binani@2026"
+# Admin credentials sourced from environment; falls back to a test-safe default
+# only when running locally. Never commit real credentials.
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@binanienterprises.com')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '')
 
 
 class TestAdminLogin:
@@ -301,7 +302,7 @@ class TestAdminDeleteBooking:
         assert response.status_code == 200, f"Expected 200, got {response.status_code}"
         
         data = response.json()
-        assert data.get("ok") == True, "Response should contain {ok: true}"
+        assert data.get("ok") is True, "Response should contain {ok: true}"
         
         # Verify booking is actually deleted - GET should return 404
         get_response = requests.get(f"{BASE_URL}/api/bookings/{self.booking_id}")
