@@ -8,17 +8,12 @@ import { Label } from "@/components/ui/label";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
 import {
   CalendarCheck, CheckCircle2, Clock, Mail, Phone, ShieldCheck, Sparkles,
   FileText, CalendarRange,
 } from "lucide-react";
 import { createBooking } from "@/lib/api";
 
-const TIME_SLOTS = [
-  "10:00 AM", "11:00 AM", "12:00 PM",
-  "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM",
-];
 
 const REASONS = [
   { value: "gateway-setup", label: "Gateway Setup" },
@@ -34,8 +29,6 @@ export default function Booking() {
   const [mode, setMode] = useState("form"); // "form" | "zoho"
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [date, setDate] = useState(undefined);
-  const [time, setTime] = useState("");
   const [form, setForm] = useState({
     full_name: "", phone: "", email: "", reason: "", message: "",
   });
@@ -228,23 +221,7 @@ export default function Booking() {
                       className="mt-2 rounded-xl bg-slate-50 border-slate-200 focus-visible:ring-indigo-500 focus-visible:ring-2" />
                   </div>
                 </div>
-
-                <div className="mt-8 pt-8 border-t border-slate-200">
-                  <div className="text-xs font-semibold text-slate-700 uppercase tracking-wider">
-                    Pick a preferred date & time
-                    <span className="text-slate-400 normal-case tracking-normal ml-1">(optional — we'll confirm)</span>
-                  </div>
-                  <div className="mt-4 grid md:grid-cols-2 gap-6">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-3 flex justify-center">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        data-testid="booking-calendar"
-                        disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))}
-                        className="rounded-xl"
-                      />
-                    </div>
+                
                     <div className="rounded-2xl border border-slate-200 bg-white p-5">
                       <div className="text-[11px] uppercase tracking-[0.2em] text-slate-500 font-semibold">Available time slots</div>
                       <div className="mt-4 grid grid-cols-2 gap-2.5">
