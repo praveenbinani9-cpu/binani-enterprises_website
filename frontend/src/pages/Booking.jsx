@@ -51,24 +51,37 @@ export default function Booking() {
   };
 
   const onSubmit = async (e) => {
-    e.preventDefault();
-    const err = validate();
-    if (err) { toast.error(err); return; }
-    setSubmitting(true);
-    try {
-      const payload = {
-        ...form,
-        preferred_date: date ? date.toISOString().slice(0, 10) : null,
-        preferred_time: time || null,
-      };
-      await createBooking(payload);
-      toast.success("Booking received! We'll reach out within 24 hours.");
-      setSubmitted(true);
-    } catch (err) {
-      toast.error("Something went wrong. Please try again or email us directly.");
-    } finally { setSubmitting(false); }
-  };
+  e.preventDefault();
 
+  const err = validate();
+  if (err) {
+    toast.error(err);
+    return;
+  }
+
+  setSubmitting(true);
+
+  try {
+    // OPTIONAL: keep your backend call
+    await createBooking({
+      ...form,
+      preferred_date: null,
+      preferred_time: null,
+    });
+
+    toast.success("Now select your time slot");
+
+    // 🔥 IMPORTANT: REDIRECT TO GOOGLE CALENDAR
+    window.open("https://calendar.app.google/RgnGFq2LbuyAEfjd7", "_blank");
+
+    setSubmitted(true);
+
+  } catch (err) {
+    toast.error("Something went wrong.");
+  } finally {
+    setSubmitting(false);
+  }
+};
   if (submitted) {
     return (
       <section data-testid="booking-success" className="relative gradient-hero min-h-[80vh] flex items-center">
