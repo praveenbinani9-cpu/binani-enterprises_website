@@ -69,10 +69,10 @@ export default function Booking() {
       preferred_time: null,
     });
 
-    toast.success("Now select your time slot");
+    toast.success("Redirecting to calendar to confirm your booking...");
 
     // 🔥 IMPORTANT: REDIRECT TO GOOGLE CALENDAR
-    window.open("https://calendar.app.google/RgnGFq2LbuyAEfjd7", "_blank");
+    window.location.href = "https://calendar.app.google/RgnGFq2LbuyAEfjd7";
 
     setSubmitted(true);
 
