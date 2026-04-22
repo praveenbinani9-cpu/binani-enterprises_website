@@ -11,7 +11,8 @@ from typing import List, Optional
 import uuid
 from datetime import datetime, timezone, timedelta
 import jwt
-
+from flask import request, jsonify
+import requests
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -87,7 +88,43 @@ def create_admin_token(email: str) -> str:
         "exp": datetime.now(timezone.utc) + timedelta(days=7),
     }
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALG)
+    
+@app.route('/book-consultation', methods=['POST'])
+def book_consultation():
+    try:
+        data = request.get_json()
 
+        name = data.get('name')
+        email = data.get('email')
+        phone = data.get('phone')
+        reason = data.get('reason')
+        date = data.get('date')
+        time = data.get('time')
+
+        url = "https://www.zohoapis.in/crm/v2/Leads"
+
+        headers = {
+            "Authorization": "Zoho-oauthtoken YOUR_ACCESS_TOKEN",
+            "Content-Type": "application/json"
+        }
+
+        payload = {
+            "data": [
+                {
+                    "Last_Name": name or "Unknown",
+                    "Email": email,
+                    "Phone": phone,
+                    "Description": f"Reason: {reason} | Preferred: {date} {time}"
+                }
+            ]
+        }
+
+        response = requests.post(url, headers=headers, json=payload)
+
+        return jsonify(response.json())
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 def admin_required(request: Request) -> dict:
     # Prefer httpOnly cookie; fall back to Authorization: Bearer for API clients
